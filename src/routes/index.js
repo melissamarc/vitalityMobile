@@ -13,6 +13,8 @@ import Homework from "../pages/Homework";
 import RecipesScreen from "../pages/Receits";
 import RecipeDetailScreen from "../pages/Detalhes/RecipeDetail1";
 
+import SettingsScreen from "../pages/Settings/firstPage";
+
 const Stack = createNativeStackNavigator();
 
 export function AppRoutes() {
@@ -33,6 +35,8 @@ export function AppRoutes() {
 
        <Stack.Screen name="Recipes" component={RecipesScreen}/>
        <Stack.Screen name="RecipeDetail" component={RecipeDetailScreen}/>
+
+       <Stack.Screen name="Settings" component={SettingsScreen}/>
        
       </Stack.Navigator>
     </NavigationContainer>
