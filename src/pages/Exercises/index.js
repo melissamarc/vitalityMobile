@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, toggleUnit, unit} from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
@@ -41,6 +41,15 @@ export default function Exercises() {
     // Diminui a distância em 200 metros (0.1 km), mas não abaixo de 0 km
     if (distance >=  0.4) {
       setDistance(prevDistance => prevDistance - 0.4);
+
+      const UnitButton = () => {
+        const [unit, setUnit] = useState('Km'); // Inicialmente, a unidade é "Km"
+      
+        const toggleUnit = () => {
+          // Alterna entre "Km" e "Kcal"
+          setUnit(unit === 'Km' ? 'Kcal' : 'Km');
+        };
+      }
     }
   };
   
@@ -77,7 +86,18 @@ export default function Exercises() {
   <Text style={styles.buttonText2}> - </Text>
   </TouchableOpacity>
   </View>
+
+  <View style={styles.buttonsopcoes}>
+      <TouchableOpacity onPress={toggleUnit} style={styles.buttonopcao}>
+        <Text style={styles.buttontextopcao}>{unit}</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={toggleUnit} style={styles.buttonopcao2}>
+        <Text style={styles.buttontextopcao2}>{unit}</Text>
+      </TouchableOpacity> 
+      </View>
   </View>
+
   );
 }
 
@@ -106,13 +126,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingHorizontal: 10,
     marginHorizontal: 17,
-    marginTop: -90,
+    marginTop: -50,
     left: -15,
   },
   buttonprincipal: {
     flexDirection: 'column',
     alignItems: 'center',
-
+    top: 405,
   },
   button: {
     backgroundColor: '#7DCD9A',
@@ -122,7 +142,6 @@ const styles = StyleSheet.create({
     height: 64,
     width: 150,
     alignItems: 'center',
-    top: 440,
   },
   buttonText: {
     color: 'white',
@@ -168,13 +187,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     left: 0,
   },
-  kmcontainer: {
+   buttonsopcoes:{
     flexDirection: 'row',
-    bottom: -40,
-    alignSelf: 'center',
-    position: 'relative',
+    alignItems: 'center',
+    top: 0,
+   },
+   buttonopcao: {
+    backgroundColor: '#D9D9D9',
+    borderRadius: 15,
+    width: 85,
+    left: 5,
+    height: 64,
+    right: 25,
+    margin: 20,
   },
-  kmtext: {
+  buttontextopcao: {
     fontSize: 70,
     color: 'black',
     paddingHorizontal: 10,
@@ -182,8 +209,25 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 150,
     alignItems: 'center',
-
-   },
+  },
+  buttonopcao2: {
+    backgroundColor: '#D9D9D9',
+    borderRadius: 15,
+    width: 85,
+    left: 135,
+    height: 64,
+    right: 25,
+    margin: 20,
+  },
+  buttontextopcao2: {
+    fontSize: 70,
+    color: 'black',
+    paddingHorizontal: 10,
+    marginHorizontal: 17,
+    marginBottom: 20,
+    marginTop: 150,
+    alignItems: 'center',
+  }
 });
 
 
