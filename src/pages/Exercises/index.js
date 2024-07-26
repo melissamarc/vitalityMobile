@@ -1,234 +1,287 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, toggleUnit, unit} from 'react-native';
-import { BorderlessButton } from 'react-native-gesture-handler';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import {
+  View,
+  Text,
+  fixed,
+  unit,
+  Image, 
+  StyleSheet, 
+  TouchableOpacity, 
+  selectedActivity,
+  setShowOptions, 
+  showOptions, 
+ } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Importe o ícone
 
+const Timer = () => {
+  const [seconds, setSeconds] = useState(0);
+  const [isCounting, setIsCounting] = useState(false);
+
+  useEffect(() => {
+    let interval;
+
+    if (isCounting) {
+      interval = setInterval(() => {
+        setSeconds(prevSeconds => prevSeconds + 30); // Incrementa 30 segundos
+      }, 30000); // 30 segundos
+    } else {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [isCounting]);
+
+  return (
+    <View style={styles.Textinicial}>
+      <Text>Tempo: {seconds} segundos</Text>
+    </View>
+  );
+};
 
 export default function Exercises() {
-  const Timer = () => {
-    const [seconds, setSeconds] = useState(0);
-    const [isRunning, setIcontando] = useState(false);
-
-    useEffect(() => {
-      let interval;
-
-      if (isCounting) {
-        interval = setInterval(() => {
-          setSeconds((prevSeconds) => prevSeconds + 3);
-        }, 30000); // Alterei para 30000 ms (30 segundo)
-      } else {
-        clearInterval(interval);
-      }
-
-      return () => clearInterval(interval);
-    }, [isCounting]);
-
-    return (
-      <View>
-        <Text>Tempo: {seconds} segundos</Text>
-      </View>
-    ); 
-  };
-
   const [distance, setDistance] = useState(0.00);
+  const [unit, setUnit] = useState('Km'); // Inicialmente, a unidade é "Km"
+  const [selectedActivity, setSelectedActivity] = useState('');
+  const [showOptions, setShowOptions] = useState(false); // Estado para mostrar/ocultar as opções
 
+  // Função para aumentar a distância
   const increaseDistance = () => {
-    // Aumenta a distância em 200 metros (0.2 km)
-    setDistance(prevDistance => prevDistance + 0.4)
+    setDistance(prevDistance => prevDistance + 0.2);
   };
 
+  // Função para diminuir a distância
   const decreaseDistance = () => {
-    // Diminui a distância em 200 metros (0.1 km), mas não abaixo de 0 km
-    if (distance >=  0.4) {
-      setDistance(prevDistance => prevDistance - 0.4);
-
-      const UnitButton = () => {
-        const [unit, setUnit] = useState('Km'); // Inicialmente, a unidade é "Km"
-      
-        const toggleUnit = () => {
-          // Alterna entre "Km" e "Kcal"
-          setUnit(unit === 'Km' ? 'Kcal' : 'Km');
-        };
-      }
+    if (distance >= 0.2) {
+      setDistance(prevDistance => prevDistance - 0.2);
     }
   };
-  
-  
+
+  // Função para alternar a unidade entre Km e Kcal
+  const toggleUnit = () => {
+    setUnit(unit === 'Km' ? 'Kcal' : 'Km');
+  };
+
+  // Função para selecionar uma atividade
+  const handleActivitySelect = (activity) => {
+    setSelectedActivity(activity);
+    setShowOptions(false); // Ocultar opções após a seleção
+  };
+
   return (
-  <View style={styles.container}>
-  <Text style={styles.titulo}> Exercícios e Atividade Física </Text>
-  <Text style={styles.subtitulo}>Cronometre seu tempo praticando e veja seu desemprenho total.
-  </Text>
-       
-  <View style={styles.buttonprincipal}>  
-  <TouchableOpacity
-  style={styles.button}
-  onPress={() => console.log('Iniciar exercício')}>
-  <Text style={styles.buttonText}>Iniciar</Text>
-  </TouchableOpacity> 
-  </View>
-  <View style={styles.kmcontainer}>
-  <View style={styles.kmtext}>
-  <Text>{distance.toFixed(2)} km</Text>
-  </View>
-  </View>
-
-  <View style={styles.buttoncontainer}>
-  <TouchableOpacity
-  style={styles.button1}
-  onPress={() => increaseDistance()}>
-  <Text style={styles.buttonText1}> + </Text>
-  </TouchableOpacity>
-
-  <TouchableOpacity
-  style={styles.button2}
-  onPress={() => decreaseDistance()}>
-  <Text style={styles.buttonText2}> - </Text>
-  </TouchableOpacity>
-  </View>
-
-  <View style={styles.buttonsopcoes}>
-      <TouchableOpacity onPress={toggleUnit} style={styles.buttonopcao}>
-        <Text style={styles.buttontextopcao}>{unit}</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={toggleUnit} style={styles.buttonopcao2}>
-        <Text style={styles.buttontextopcao2}>{unit}</Text>
-      </TouchableOpacity> 
+    <View style={styles.container}>
+      <Text style={styles.titulo}>Exercícios e Atividade Física</Text>
+      <Text style={styles.subtitulo}>
+        Cronometre seu tempo praticando e veja seu desempenho total.
+      </Text>
+      
+      <View style={styles.containerinicial}>  
+        <TouchableOpacity
+          style={styles.buttoninicial}
+          onPress={() => console.log('')}
+        >
+          <Text style={styles.buttonTextinicial}>Iniciar</Text>
+        </TouchableOpacity> 
       </View>
-  </View>
 
+      <Timer />
+
+      <View style={styles.controlecontainer}>
+        <TouchableOpacity style={styles.buttonaumentar} onPress={increaseDistance}>
+        <Image source={require('../../assets/mais.png')} style={styles.iconImage} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttondiminuir} onPress={decreaseDistance}>
+        <Image source={require('../../assets/sinal-de-menos.png')} style={styles.iconImage} />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.containerkm}>
+        <TouchableOpacity onPress={toggleUnit} style={styles.buttonkm}>
+          <Image source={require('../../assets/cronometro.png')} style={styles.iconImage} />
+          <Text style={styles.buttontextopcao}>{unit}</Text>
+        </TouchableOpacity>
+      </View>
+      
+      <View style={styles.containerexercicios}>
+      <TouchableOpacity
+        style={styles.activityButton}
+        onPress={() => setShowOptions(!showOptions)}
+      >
+        <Text style={styles.activityButtonText}>
+          {selectedActivity ? selectedActivity : 'Escolha a atividade'}
+        </Text>
+      </TouchableOpacity>
+      </View>
+
+      {/* Menu de opções */}
+      {showOptions && (
+        <View style={styles.optionsContainer}>
+          {['Caminhada', 'Corrida', 'Musculação', 'Personalizado'].map(activity => (
+            <TouchableOpacity
+              key={activity}
+              style={styles.optionButton}
+              onPress={() => handleActivitySelect(activity)}
+            >
+              <Text style={styles.optionButtonText}>{activity}</Text>
+            </TouchableOpacity>
+            
+          ))}
+          
+        </View>
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
     flexDirection: 'column',
     marginTop: 0,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
     backgroundColor: '#ffffff',
     justifyContent: 'space-between',
+    
   },
   titulo: {
+    position: 'static',
     fontWeight: 'bold',
     fontSize: 42,
     marginTop: 70,
     paddingHorizontal: 10,
     marginHorizontal: 20,
     marginBottom: 35,
-    left: -20,
   },
   subtitulo: {
+    position: 'static',
     color: 'black',
     fontSize: 14,
     paddingHorizontal: 10,
     marginHorizontal: 17,
-    marginTop: -50,
-    left: -15,
+    marginTop: -60,
   },
-  buttonprincipal: {
-    flexDirection: 'column',
+  Textinicial: {
+    color: 'black',
+    fontSize: 0,
+    fontWeight: 'bold',
+  },
+  containerinicial: {
     alignItems: 'center',
-    top: 405,
+    marginVertical: 10,
+    marginTop: 200,
   },
-  button: {
+  buttoninicial: {
     backgroundColor: '#7DCD9A',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 10,
+    borderRadius: 20,
+    left: -45,
     height: 64,
-    width: 150,
+    width: 160,
     alignItems: 'center',
+    justifyContent: 'center',
+    bottom: -253,
   },
-  buttonText: {
+  buttonTextinicial: {
     color: 'white',
-    fontSize: 35,
+    fontSize: 40,
     fontWeight: 'bold',
   },
-  buttoncontainer: {
+  controlecontainer: {
     flexDirection: 'row',
-    marginBottom: 100,
-    bottom: 70,
-    alignSelf: 'center',
-    position: 'relative',
+    justifyContent: 'space-around',
+    marginVertical: 15,
+    bottom: 100,
   },
-  button1: {
+  buttonaumentar: {
     backgroundColor: '#D9D9D9',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 30,
-    height: 60,
-    width: 'auto',
-    left: -90,
-    right: 20,
+    borderRadius: 40,
+    marginTop: -100,
+    width: 70,
+    height: 70,
+    right: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  buttonText1: {
-    color: 'black',
-    fontSize: 30,
-    fontWeight: 'bold',
-    left: 0,
-  },
-  button2: {
+  buttondiminuir: {
     backgroundColor: '#D9D9D9',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 30,
-    width: 'auto',
-    left: 90,
-    height: 60,
-    right: 20,
+    borderRadius: 40,
+    marginTop: -100,
+    width: 70,
+    height: 70,
+    left: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  buttonText2: {
-    color: 'black',
-    fontSize: 30,
-    fontWeight: 'bold',
-    left: 0,
-  },
-   buttonsopcoes:{
+  containerkm:{
     flexDirection: 'row',
     alignItems: 'center',
-    top: 0,
-   },
-   buttonopcao: {
+    justifyContent: 'center',
+    bottom: -65,
+    margin: 0,
+  },
+  buttonkm: {
+    flexDirection: 'row', // Coloca ícone e texto lado a lado
+    alignItems: 'center',
     backgroundColor: '#D9D9D9',
     borderRadius: 15,
-    width: 85,
-    left: 5,
+    left: 85,
+    width: 95,
     height: 64,
-    right: 25,
-    margin: 20,
+    justifyContent: 'center',
   },
   buttontextopcao: {
-    fontSize: 70,
+    fontSize: 20,
     color: 'black',
-    paddingHorizontal: 10,
-    marginHorizontal: 17,
-    marginBottom: 20,
-    marginTop: 150,
-    alignItems: 'center',
+    marginLeft: 0, // Espaço entre ícone e texto
   },
-  buttonopcao2: {
+  iconImage: {
+    width: 30,
+    height: 30,
+  },
+  activityButton: {
     backgroundColor: '#D9D9D9',
     borderRadius: 15,
-    width: 85,
-    left: 135,
-    height: 64,
-    right: 25,
-    margin: 20,
-  },
-  buttontextopcao2: {
-    fontSize: 70,
-    color: 'black',
+    paddingVertical: 10,
     paddingHorizontal: 10,
-    marginHorizontal: 17,
-    marginBottom: 20,
-    marginTop: 150,
+    marginVertical: 5,
+    bottom: 100,
+    width: 260,
+    height: 64,
     alignItems: 'center',
-  }
+    alignSelf: 'center',
+
+  },
+  activityButtonText: {
+    fontSize: 18,
+    color: 'black',
+    flexDirection: 'column',
+    
+  },
+  optionsContainer: {
+    alignItems: 'center',
+    flexDirection: 'colum',
+  },
+  optionButton: {
+    backgroundColor: '#D9D9D9',
+    borderRadius: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    bottom: 100,
+    width: 260,
+    height: 40,
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  optionButtonText: {
+    fontSize: 16,
+    color: 'black',
+  },
 });
+
 
 
 
