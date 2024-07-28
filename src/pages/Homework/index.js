@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Exercises from '../Exercises';
 import Receits from '../Receits';
 import Content from '../HomeworkContent'
+import Configuracao from '../Configuracao'
 
 
 import {
@@ -34,6 +35,9 @@ const Homework = () => {
           } else if (route.name === 'Receits') {
             iconName = 'receipt';
           }
+           else if (route.name === 'Configuracao'){
+            iconName = 'Configuration'
+          }
           return <MaterialIcons name={iconName} size={size} color={color} />;
        },
         tabBarActiveTintColor: 'white', // Cor dos ícones ativos
@@ -55,6 +59,7 @@ const Homework = () => {
       <Tab.Screen name="Homework" component={Content} options={{ headerShown: false }} />
       <Tab.Screen name="Exercises" component={Exercises} options={{ headerShown: false }} />
       <Tab.Screen name="Receits" component={Receits} options={{ headerShown: false }} />
+      <Tab.Screen name="Configuracao" component={Configuracao} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 };

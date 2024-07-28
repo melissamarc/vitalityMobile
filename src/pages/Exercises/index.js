@@ -4,14 +4,14 @@ import {
   Text,
   fixed,
   unit,
-  Image, 
+  Image,
   StyleSheet, 
   TouchableOpacity, 
   selectedActivity,
   setShowOptions, 
   showOptions, 
  } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Importe o ícone
+
 
 const Timer = () => {
   const [seconds, setSeconds] = useState(0);
@@ -23,7 +23,7 @@ const Timer = () => {
     if (isCounting) {
       interval = setInterval(() => {
         setSeconds(prevSeconds => prevSeconds + 30); // Incrementa 30 segundos
-      }, 30000); // 30 segundos
+      }, 36000); // 30 segundos
     } else {
       clearInterval(interval);
     }
@@ -32,9 +32,11 @@ const Timer = () => {
   }, [isCounting]);
 
   return (
-    <View style={styles.Textinicial}>
-      <Text>Tempo: {seconds} segundos</Text>
-    </View>
+    <View style={styles.timercontainer}>
+    <Text style={styles.timetext}>
+       {seconds.toFixed(1)} {unit}
+    </Text>
+  </View>
   );
 };
 
@@ -56,8 +58,8 @@ export default function Exercises() {
     }
   };
 
-  // Função para alternar a unidade entre Km e Kcal
-  const toggleUnit = () => {
+   // Função para alternar a unidade entre Km e Kcal
+   const toggleUnit = () => {
     setUnit(unit === 'Km' ? 'Kcal' : 'Km');
   };
 
@@ -85,34 +87,41 @@ export default function Exercises() {
 
       <Timer />
 
-      <View style={styles.controlecontainer}>
-        <TouchableOpacity style={styles.buttonaumentar} onPress={increaseDistance}>
-        <Image source={require('../../assets/mais.png')} style={styles.iconImage} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttondiminuir} onPress={decreaseDistance}>
-        <Image source={require('../../assets/sinal-de-menos.png')} style={styles.iconImage} />
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.containerkm}>
-        <TouchableOpacity onPress={toggleUnit} style={styles.buttonkm}>
+   <View style={styles.unitContainer}>
+        <TouchableOpacity onPress={toggleUnit} style={styles.unitButton}>
           <Image source={require('../../assets/cronometro.png')} style={styles.iconImage} />
-          <Text style={styles.buttontextopcao}>{unit}</Text>
+          <Text style={styles.unitText}>{unit}</Text>
         </TouchableOpacity>
       </View>
       
+      <View style={styles.distanceContainer}>
+        <Text style={styles.distanceText}>
+           {distance.toFixed(1)} {unit}
+        </Text>
+      </View>
+
+      <View style={styles.controlContainer}>
+        <TouchableOpacity style={styles.increaseButton} onPress={increaseDistance}>
+          <Image source={require('../../assets/mais.png')} style={styles.iconImage} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.decreaseButton} onPress={decreaseDistance}>
+          <Image source={require('../../assets/sinal-de-menos.png')} style={styles.iconImage} />
+        </TouchableOpacity>
+      </View>
+
+
       <View style={styles.containerexercicios}>
       <TouchableOpacity
         style={styles.activityButton}
         onPress={() => setShowOptions(!showOptions)}
       >
         <Text style={styles.activityButtonText}>
-          {selectedActivity ? selectedActivity : 'Escolha a atividade'}
+          {selectedActivity ? selectedActivity : 'Exercicios'}
         </Text>
       </TouchableOpacity>
       </View>
 
-      {/* Menu de opções */}
+      
       {showOptions && (
         <View style={styles.optionsContainer}>
           {['Caminhada', 'Corrida', 'Musculação', 'Personalizado'].map(activity => (
@@ -173,25 +182,35 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 20,
-    left: -45,
+    left: -55,
     height: 64,
-    width: 160,
+    width: 155,
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: -253,
+    bottom: -262,
   },
   buttonTextinicial: {
     color: 'white',
     fontSize: 40,
     fontWeight: 'bold',
   },
-  controlecontainer: {
+  timercontainer: {
+
+  },
+  timetext: {
+    fontSize: 20,
+    alignItems: 'center',
+    alignSelf: 'center',
+    fontWeight: 'bold',
+   bottom: 80,
+  },
+  controlContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginVertical: 15,
     bottom: 100,
   },
-  buttonaumentar: {
+  increaseButton: {
     backgroundColor: '#D9D9D9',
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -203,7 +222,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buttondiminuir: {
+  decreaseButton: {
     backgroundColor: '#D9D9D9',
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -215,24 +234,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  containerkm:{
+  distanceContainer:{
+    
+  },
+  distanceText:{
+    fontSize: 20,
+    alignItems: 'center',
+    alignSelf: 'center',
+    fontWeight: 'bold',
+   bottom: 80,
+  },
+
+  unitContainer:{
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: -65,
+    bottom: -135,
     margin: 0,
   },
-  buttonkm: {
+  unitButton: {
     flexDirection: 'row', // Coloca ícone e texto lado a lado
     alignItems: 'center',
     backgroundColor: '#D9D9D9',
     borderRadius: 15,
-    left: 85,
+    left: 82,
     width: 95,
     height: 64,
     justifyContent: 'center',
   },
-  buttontextopcao: {
+  unitText: {
     fontSize: 20,
     color: 'black',
     marginLeft: 0, // Espaço entre ícone e texto
@@ -252,21 +282,22 @@ const styles = StyleSheet.create({
     height: 64,
     alignItems: 'center',
     alignSelf: 'center',
-
   },
   activityButtonText: {
     fontSize: 18,
     color: 'black',
+    fontWeight: 'bold',
     flexDirection: 'column',
     
   },
   optionsContainer: {
     alignItems: 'center',
     flexDirection: 'colum',
+    
   },
   optionButton: {
     backgroundColor: '#D9D9D9',
-    borderRadius: 15,
+    borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 10,
     marginVertical: 5,
@@ -277,6 +308,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   optionButtonText: {
+    fontWeight: 'bold',
     fontSize: 16,
     color: 'black',
   },
