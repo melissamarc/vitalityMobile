@@ -64,18 +64,15 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 42,
-    marginTop: 25,
+    marginTop: 35,
     right: 45,
     paddingHorizontal: 10,
     marginHorizontal: 40,
   },
   subtitle: {
-    color: 'black',
-    fontSize: 14,
-    right: 25,
-    paddingHorizontal: 0,
-    marginHorizontal: 30,
-    marginVertical: 10,
+    fontSize: 16,
+    color: '#777',
+    marginBottom: 20,
   },
   inputContainer: {
     marginVertical: 3,

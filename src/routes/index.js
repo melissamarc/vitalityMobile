@@ -2,6 +2,7 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+
 import Home from "../pages/home/index";
 import Dashboard from "../pages/Dashboard";
 import Dashboard2 from "../pages/Dashboard2";
@@ -10,11 +11,16 @@ import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
 import Homework from "../pages/Homework";
 import Exercises from "../pages/Exercises";
-import Configuracao from "../pages/Configuracao";
 import RecipesScreen from "../pages/Receits";
 import RecipeDetailScreen from "../pages/Detalhes/RecipeDetail1";
-import Conta from "../pages/Conta";
-import DadosPessoaisScreen from "../pages/DadosP";
+import ConfiguracaoScreen from '../pages/Configuracao';
+
+
+
+import AccountScreen from '../pages/Conta';
+import PersonalDataScreen from '../pages/DadosP';
+import AppearanceScreen from "../pages/Appearance";
+import InviteFriendsScreen from "../pages/InviteFriends";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +28,7 @@ export function AppRoutes() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="DadosP"
+        initialRouteName="Appaerance" 
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Home" component={Home} />
@@ -33,10 +39,16 @@ export function AppRoutes() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Homework" component={Homework} />
         <Stack.Screen name="Exercises" component={Exercises} />
-        <Stack.Screen name="Configuracao" component={Configuracao} />
         <Stack.Screen name="Recipes" component={RecipesScreen} />
         <Stack.Screen name="RecipeDetail" component={RecipeDetailScreen} />
-        <Stack.Screen name="Conta" component={Conta}/>
+
+        <Stack.Screen name="Configuracao" component={ConfiguracaoScreen} />
+        <Stack.Screen name="Account" component={AccountScreen} />
+        <Stack.Screen name="PersonalData" component={PersonalDataScreen} />
+        <Stack.Screen name="Appearance" component={AppearanceScreen} />
+        <Stack.Screen name="InviteFriends" component={InviteFriendsScreen} />
+      
+        
       </Stack.Navigator>
     </NavigationContainer>
 
