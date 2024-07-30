@@ -1,85 +1,143 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';import Icon from 'react-native-vector-icons/MaterialIcons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, View, Text, StyleSheet, Switch, Appearance } from 'react-native';
+import { RadioButton } from 'react-native-paper';
 
 const AppearanceScreen = () => {
-  const articles = [
-    'Dúvidas sobre cálculos',
-    'Dúvidas sobre cálculos',
-    'Dúvidas sobre cálculos',
-    'Dúvidas sobre cálculos',
-    'Dúvidas sobre cálculos',
-  ];
+  const [checked, setChecked] = useState('light');
+  const [switchStates, setSwitchStates] = useState({
+    light: false,
+    dark: false,
+    device: false,
+  });
+  const [themeColor, setThemeColor] = useState('white');
+
+  useEffect(() => {
+    const colorScheme = Appearance.getColorScheme();
+    if (checked === 'device') {
+      setThemeColor(colorScheme === 'dark' ? 'black' : 'white');
+    } else {
+      setThemeColor(checked === 'dark' ? 'black' : 'white');
+    }
+  }, [checked]);
+
+  const toggleSwitch = (theme) => {
+    const newSwitchStates = {
+      light: false,
+      dark: false,
+      device: false,
+    };
+    newSwitchStates[theme] = !switchStates[theme];
+    setSwitchStates(newSwitchStates);
+    setChecked(theme);
+  };
 
   return (
-    <View style={styles.container}>
-      <Image source={require('../../assets/logo.png')} style={styles.icoImage} />
-      <Text style={styles.title}>Como podemos ajudar?</Text>
-      <View style={styles.searchBar}></View>
-      <Text style={styles.sectionTitle}>Artigos Frequentes</Text>
-      {articles.map((article, index) => (
-        <TouchableOpacity key={index} style={styles.articleContainer}>
-          <Text style={styles.articleTitle}>{article}</Text>
-          <Text style={styles.articleSubtitle}>
-            Veja como é feito o cálculo da taxa de metabolismo basal e como utilizamos com você.
-          </Text>
-        </TouchableOpacity>
-      ))}
-    </View>
+    <SafeAreaView style={[styles.container, { backgroundColor: themeColor }]}>
+      <View style={styles.headerContainer}>
+        <Text style={[styles.header, { color: themeColor === 'black' ? 'white' : 'black' }]}>Aparência</Text>
+        <Text style={[styles.subheader, { color: themeColor === 'black' ? 'lightgray' : 'gray' }]}>
+          Gerencie a cor e o plano de fundo do aplicativo. Essas alterações afetam todas as contas do VitalyVision neste dispositivo.
+        </Text>
+      </View>
+      <View style={styles.bodyContainer}>
+        <Text style={[styles.title, { color: themeColor === 'black' ? 'white' : 'black' }]}>Tema</Text>
+        <View style={styles.radioContainer}>
+          <View style={styles.radioItem}>
+            <RadioButton
+              value="light"
+              status={checked === 'light' ? 'checked' : 'unchecked'}
+              onPress={() => toggleSwitch('light')}
+            />
+            <Text style={[styles.radioLabel, { color: themeColor === 'black' ? 'white' : 'black' }]}>Claro</Text>
+            <Switch
+              onValueChange={() => toggleSwitch('light')}
+              value={switchStates.light}
+              style={styles.switch}
+            />
+          </View>
+          <View style={styles.radioItem}>
+            <RadioButton
+              value="dark"
+              status={checked === 'dark' ? 'checked' : 'unchecked'}
+              onPress={() => toggleSwitch('dark')}
+            />
+            <Text style={[styles.radioLabel, { color: themeColor === 'black' ? 'white' : 'black' }]}>Escuro</Text>
+            <Switch
+              onValueChange={() => toggleSwitch('dark')}
+              value={switchStates.dark}
+              style={styles.switch}
+            />
+          </View>
+          <View style={styles.radioItem}>
+            <RadioButton
+              value="device"
+              status={checked === 'device' ? 'checked' : 'unchecked'}
+              onPress={() => toggleSwitch('device')}
+            />
+            <Text style={[styles.radioLabel, { color: themeColor === 'black' ? 'white' : 'black' }]}>Configurações do dispositivo</Text>
+            <Switch
+              onValueChange={() => toggleSwitch('device')}
+              value={switchStates.device}
+              style={styles.switch}
+            />
+          </View>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
- container: {
-   flex: 1,
-   padding: 16,
-   alignItems: 'center',
-   backgroundColor: '#fff',
-   
- },
-   icoImage: {
-    width: 60,
-    height: 60,
-    marginTop: 100,
+  container: {
+    flex: 1,
+    padding: 20,
+    
+  },
+  headerContainer: {
+    marginBottom: 50,
+    marginTop: 50,
+    left: 20,
+  },
+  header: {
+    fontSize: 32,
+    fontWeight: 'bold',
+  },
+  subheader: {
+    fontSize: 12,
+    color: 'gray',
+  },
+  bodyContainer: {
+    flex: 1,
   },
   title: {
-    fontWeight: 'bold',
-    fontSize: 30,
-    marginTop: 50,
-    textAlign: 'center',
-    paddingHorizontal: 10,
-    marginHorizontal: 0,
-  },
-  searchBar: {
-    height: 30,
-    backgroundColor: '#ccc',
-    borderRadius: 20,
+    fontSize: 19,
     marginBottom: 10,
-  },
-  sectionTitle: {
-    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
+    left: 35,
   },
-  articleContainer: {
-    padding: 16,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 8,
-    marginBottom: 12,
-    width: 360,
-    height: 80
+  radioContainer: {
+    marginLeft: 10,
   },
-  articleTitle: {
+  radioItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 10,
+    marginBottom: 20,
+    right: 10,
+  },
+  radioLabel: {
     fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5,
+    flex: 5,
   },
-  articleSubtitle: {
-    fontSize: 14,
-    color: '#666',
+  switch: {
+    marginLeft: 10,
+    width: 50,
+  
   },
+  
+
 });
 
-export default AppearanceScreen
+export default AppearanceScreen;
+
+

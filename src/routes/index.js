@@ -19,8 +19,11 @@ import ConfiguracaoScreen from '../pages/Configuracao';
 
 import AccountScreen from '../pages/Conta';
 import PersonalDataScreen from '../pages/DadosP';
-import AppearanceScreen from "../pages/Appearance";
 import InviteFriendsScreen from "../pages/InviteFriends";
+import HelpandSupportScrean from "../pages/HelpandSupport";
+import AppearanceScrean from "../pages/Appearance";
+
+
 
 const Stack = createNativeStackNavigator();
 
@@ -28,7 +31,7 @@ export function AppRoutes() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Appaerance" 
+        initialRouteName="Appearence" 
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Home" component={Home} />
@@ -45,8 +48,9 @@ export function AppRoutes() {
         <Stack.Screen name="Configuracao" component={ConfiguracaoScreen} />
         <Stack.Screen name="Account" component={AccountScreen} />
         <Stack.Screen name="PersonalData" component={PersonalDataScreen} />
-        <Stack.Screen name="Appearance" component={AppearanceScreen} />
+        <Stack.Screen name="HelpAndSupport" component={HelpandSupportScrean} />
         <Stack.Screen name="InviteFriends" component={InviteFriendsScreen} />
+        <Stack.Screen name="Appearance" component={AppearanceScrean} />
       
         
       </Stack.Navigator>
