@@ -22,6 +22,7 @@ import PersonalDataScreen from '../pages/DadosP';
 import InviteFriendsScreen from "../pages/InviteFriends";
 import HelpandSupportScrean from "../pages/HelpandSupport";
 import AppearanceScrean from "../pages/Appearance";
+import { ImportsNotUsedAsValues } from "typescript";
 
 
 
