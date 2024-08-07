@@ -1,6 +1,6 @@
-import * as React from "react";
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Share } from "react-native";
-import QRCode from 'react-native-qrcode-svg';
+import QRCode from "react-native-qrcode-svg";
 
 const InviteFriendsScreen = () => {
   const [text, setText] = React.useState('VitalityMobile');
@@ -21,12 +21,11 @@ const InviteFriendsScreen = () => {
       <Text style={styles.title}>Convide Amigos</Text>
       <TextInput
         style={styles.input}
-        
         value={text}
         onChangeText={setText}
       />
-      <TouchableOpacity style={styles.button} onPress={() => {}}>
-        <Text style={styles.buttonText}>Gerar QR Code</Text>
+      <TouchableOpacity style={styles.button} onPress={handleShare}>
+        <Text style={styles.buttonText}>Compartilhar QR Code</Text>
       </TouchableOpacity>
       <View style={styles.qrContainer}>
         <QRCode
@@ -37,6 +36,7 @@ const InviteFriendsScreen = () => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

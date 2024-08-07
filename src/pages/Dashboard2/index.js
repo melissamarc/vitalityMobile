@@ -4,8 +4,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  Button,
   SafeAreaView,
   TouchableOpacity,
   Pressable,
@@ -13,24 +11,10 @@ import {
 
 export default function Dashboard2() {
   const navigation = useNavigation();
-  const [selected, setSelected] = useState([]);
-  function verifyIsSelected(value) {
-    for (let i = 0; i < selected.length; i++) {
-      if (selected[i] === value) {
-        return true;
-      }
-    }
-    return false;
-  }
+  const [selected, setSelected] = useState(null);
 
   function toggleItem(value) {
-    setSelected((prevItems) => {
-      if (prevItems.includes(value)) {
-        return prevItems.filter((i) => i !== value);
-      } else {
-        return [...prevItems, value];
-      }
-    });
+    setSelected(value);
   }
 
   return (
@@ -41,18 +25,12 @@ export default function Dashboard2() {
       <SafeAreaView style={styles.container2}>
         <Pressable
           onPress={() => toggleItem("0")}
-          style={{
-            marginBottom: 10,
-            display: "flex",
-            justifyContent: "center",
-            paddingVertical: 10,
-            borderRadius: 5,
-            width: 330,
-            height: 90,
-            backgroundColor: `${
-              verifyIsSelected("0") == true ? "#97D29A" : "#EBEAEA"
-            }`,
-          }}
+          style={[
+            styles.pressable,
+            {
+              backgroundColor: selected === "0" ? "#97D29A" : "#EBEAEA",
+            },
+          ]}
         >
           <Text style={styles.btnText}>Não muito ativo </Text>
           <Text style={styles.btnText2}>
@@ -63,69 +41,51 @@ export default function Dashboard2() {
 
         <Pressable
           onPress={() => toggleItem("1")}
-          style={{
-            marginBottom: 10,
-            display: "flex",
-            justifyContent: "center",
-            paddingVertical: 10,
-            borderRadius: 5,
-            width: 330,
-            height: 90,
-            backgroundColor: `${
-              verifyIsSelected("1") == true ? "#97D29A" : "#EBEAEA"
-            }`,
-          }}
+          style={[
+            styles.pressable,
+            {
+              backgroundColor: selected === "1" ? "#97D29A" : "#EBEAEA",
+            },
+          ]}
         >
-        <Text style={styles.btnText}>Levemente ativo </Text>
-          <Text style={styles.btnText2}>(Passo metade do dia sem me exercitar mas costumo andar bastante no dia.)
+          <Text style={styles.btnText}>Levemente ativo </Text>
+          <Text style={styles.btnText2}>
+            (Passo metade do dia sem me exercitar mas costumo andar bastante no
+            dia.)
           </Text>
         </Pressable>
-
 
         <Pressable
           onPress={() => toggleItem("2")}
-          style={{
-            marginBottom: 10,
-            display: "flex",
-            justifyContent: "center",
-            paddingVertical: 10,
-            borderRadius: 5,
-            width: 330,
-            height: 90,
-            backgroundColor: `${
-              verifyIsSelected("2") == true ? "#97D29A" : "#EBEAEA"
-            }`,
-          }}
+          style={[
+            styles.pressable,
+            {
+              backgroundColor: selected === "2" ? "#97D29A" : "#EBEAEA",
+            },
+          ]}
         >
- <Text style={styles.btnText}>Ativo </Text>
-          <Text style={styles.btnText2}>(Pratico atividade física eventualmente e procuro estar me exercitando.)
-      
+          <Text style={styles.btnText}>Ativo </Text>
+          <Text style={styles.btnText2}>
+            (Pratico atividade física eventualmente e procuro estar me
+            exercitando.)
           </Text>
         </Pressable>
-
 
         <Pressable
           onPress={() => toggleItem("3")}
-          style={{
-            marginBottom: 40,
-            display: "flex",
-            justifyContent: "center",
-            paddingVertical: 10,
-            borderRadius: 5,
-            width: 330,
-            height: 90,
-            backgroundColor: `${
-              verifyIsSelected("3") == true ? "#97D29A" : "#EBEAEA"
-            }`,
-          }}
+          style={[
+            styles.pressable,
+            {
+              backgroundColor: selected === "3" ? "#97D29A" : "#EBEAEA",
+            },
+          ]}
         >
-         <Text style={styles.btnText}>Bastante ativo </Text>
-          <Text style={styles.btnText2}>(Pratico atividades físicas regularmente e costumo me exercitar todos os dias.)
-    
+          <Text style={styles.btnText}>Bastante ativo </Text>
+          <Text style={styles.btnText2}>
+            (Pratico atividades físicas regularmente e costumo me exercitar
+            todos os dias.)
           </Text>
         </Pressable>
-
-
       </SafeAreaView>
 
       <TouchableOpacity
@@ -145,7 +105,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   titulo: {
     fontSize: 35,
     fontWeight: "bold",
@@ -154,38 +113,44 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 0,
   },
-
   subtitulo: {
     padding: 20,
     paddingTop: 0,
     paddingEnd: 140,
-    paddingBottom: 50,
+    paddingBottom: 60,
   },
-
+  pressable: {
+    marginBottom: 10,
+    display: "flex",
+    justifyContent: "center",
+    paddingVertical: 10,
+    borderRadius: 15,
+    width: 320,
+    height: 90,
+  },
   btnText: {
     fontSize: 17,
     paddingStart: 15,
     color: "#000",
     fontWeight: "bold",
   },
-
   btnText2: {
     paddingStart: 15,
     color: "#000",
   },
-
   botao: {
     backgroundColor: "#0EAB6E", // Cor de fundo
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 12,
     alignItems: "center",
-    width: 150,
+    width: 130,
     height: 50,
+    marginTop: 30,
   },
-
   textbutton: {
     fontSize: 20,
     color: "#000",
     fontWeight: "bold",
   },
 });
+
