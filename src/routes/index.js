@@ -22,6 +22,7 @@ import PersonalDataScreen from '../pages/DadosP';
 import InviteFriendsScreen from "../pages/InviteFriends";
 import HelpandSupportScrean from "../pages/HelpandSupport";
 import AppearanceScrean from "../pages/Appearance";
+import WalkScreen from "../pages/Walk";
 import { ImportsNotUsedAsValues } from "typescript";
 
 
@@ -32,7 +33,7 @@ export function AppRoutes() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Appearence" 
+        initialRouteName="Walk" 
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Home" component={Home} />
@@ -52,6 +53,8 @@ export function AppRoutes() {
         <Stack.Screen name="HelpAndSupport" component={HelpandSupportScrean} />
         <Stack.Screen name="InviteFriends" component={InviteFriendsScreen} />
         <Stack.Screen name="Appearance" component={AppearanceScrean} />
+        <Stack.Screen name="Walk"  component={WalkScreen} />
+
       
         
       </Stack.Navigator>

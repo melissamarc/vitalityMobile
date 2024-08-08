@@ -1,10 +1,17 @@
+// Exercises.js
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
 const Exercises = () => {
   const [selectedDay, setSelectedDay] = useState('15');
   const daysInMonth = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
+  const navigation = useNavigation();
+
+  const navigateToActivityDetail = (activity) => {
+    navigation.navigate('ActivityDetail', { activity });
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -30,31 +37,31 @@ const Exercises = () => {
         showsHorizontalScrollIndicator={false}
         style={styles.calendar}
       />
-      <View style={styles.activity}>
+      <TouchableOpacity style={styles.activity} onPress={() => navigateToActivityDetail('Caminhada')}>
         <Icon name="walk" size={30} color="#4CAF50" />
         <Text style={styles.activityText}> Caminhada </Text>
         <Text style={styles.activityTime}>Today 11:45 AM</Text>
-      </View>
-      <View style={styles.activity}>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.activity} onPress={() => navigateToActivityDetail('Corrida')}>
         <Icon name="walk" size={30} color="#4CAF50" />
         <Text style={styles.activityText}> Corrida </Text>
         <Text style={styles.activityTime}>Today 8:00 PM</Text>
-      </View>
-      <View style={styles.activity}>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.activity} onPress={() => navigateToActivityDetail('Ciclismo')}>
         <Icon name="bike" size={30} color="#4CAF50" />
         <Text style={styles.activityText}> Ciclismo </Text>
         <Text style={styles.activityTime}>Today 9:00 AM</Text>
-      </View>
-      <View style={styles.activity}>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.activity} onPress={() => navigateToActivityDetail('Musculação')}>
         <Icon name="arm-flex" size={30} color="#4CAF50" />
         <Text style={styles.activityText}> Musculação </Text>
         <Text style={styles.activityTime}>Today 8:00 AM</Text>
-      </View>
-      <View style={styles.activity}>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.activity} onPress={() => navigateToActivityDetail('Personalizado')}>
         <Icon name="weight-lifter" size={30} color="#4CAF50" />
-        <Text style={styles.activityText}> Personalizado  </Text>
+        <Text style={styles.activityText}> Personalizado </Text>
         <Text style={styles.activityTime}>Today 8:00 AM</Text>
-      </View>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -112,7 +119,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#EBEAEA',
     borderRadius: 15,
     marginVertical: 5,
-
   },
   activityText: {
     flex: 1,
@@ -126,6 +132,7 @@ const styles = StyleSheet.create({
 });
 
 export default Exercises;
+
 
 
 
