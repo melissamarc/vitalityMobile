@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { format, addDays, startOfMonth, parse } from 'date-fns';
+import { enUS} from 'date-fns/locale';
 
 const Exercises = () => {
   const [selectedDay, setSelectedDay] = useState('15');
+  const [dayOfWeek, setDayOfWeek] = useState('');
   const daysInMonth = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
+
+  useEffect(() => {
+    const calculateDayOfWeek = (day) => {
+      const date = parse(day, 'd', new Date());
+      const currentMonthStart = startOfMonth(new Date());
+      const selectedDate = addDays(currentMonthStart, day - 1);
+      const weekDay = format(selectedDate, 'EEEE', { locale: enUS });
+      return weekDay;
+    };
+
+    setDayOfWeek(calculateDayOfWeek(selectedDay));
+  }, [selectedDay]);
+
+  const activities = [
+    { id: 1, type: 'Caminhada', icon: 'walk', time: '11:45 AM' },
+    { id: 2, type: 'Corrida', icon: 'run', time: '8:00 PM' },
+    { id: 3, type: 'Ciclismo', icon: 'bike', time: '9:00 AM' },
+    { id: 4, type: 'Musculação', icon: 'arm-flex', time: '8:00 AM' },
+    { id: 5, type: 'Personalizado', icon: 'weight-lifter', time: '8:00 AM' },
+  ];
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Monday, {selectedDay}</Text>
+        <Text style={styles.headerText}>{dayOfWeek}, {selectedDay}</Text>
         <View style={styles.profilePic}>
           {/* Coloque a imagem do perfil aqui */}
         </View>
@@ -30,31 +53,13 @@ const Exercises = () => {
         showsHorizontalScrollIndicator={false}
         style={styles.calendar}
       />
-      <View style={styles.activity}>
-        <Icon name="walk" size={30} color="#4CAF50" />
-        <Text style={styles.activityText}> Caminhada </Text>
-        <Text style={styles.activityTime}>Today 11:45 AM</Text>
-      </View>
-      <View style={styles.activity}>
-        <Icon name="walk" size={30} color="#4CAF50" />
-        <Text style={styles.activityText}> Corrida </Text>
-        <Text style={styles.activityTime}>Today 8:00 PM</Text>
-      </View>
-      <View style={styles.activity}>
-        <Icon name="bike" size={30} color="#4CAF50" />
-        <Text style={styles.activityText}> Ciclismo </Text>
-        <Text style={styles.activityTime}>Today 9:00 AM</Text>
-      </View>
-      <View style={styles.activity}>
-        <Icon name="arm-flex" size={30} color="#4CAF50" />
-        <Text style={styles.activityText}> Musculação </Text>
-        <Text style={styles.activityTime}>Today 8:00 AM</Text>
-      </View>
-      <View style={styles.activity}>
-        <Icon name="weight-lifter" size={30} color="#4CAF50" />
-        <Text style={styles.activityText}> Personalizado  </Text>
-        <Text style={styles.activityTime}>Today 8:00 AM</Text>
-      </View>
+      {activities.map((activity) => (
+        <View key={activity.id} style={styles.activity}>
+          <Icon name={activity.icon} size={30} color="#4CAF50" />
+          <Text style={styles.activityText}>{activity.type}</Text>
+          <Text style={styles.activityTime}>Hoje {activity.time}</Text>
+        </View>
+      ))}
     </ScrollView>
   );
 };
@@ -62,7 +67,7 @@ const Exercises = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffff',
+    backgroundColor: '#ffffff',
     paddingHorizontal: 20,
   },
   header: {
@@ -97,7 +102,6 @@ const styles = StyleSheet.create({
   },
   selectedDay: {
     backgroundColor: '#4CAF50',
-    borderRadius: 30,
   },
   calendarDayText: {
     fontSize: 16,
@@ -112,7 +116,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#EBEAEA',
     borderRadius: 15,
     marginVertical: 5,
-
   },
   activityText: {
     flex: 1,
