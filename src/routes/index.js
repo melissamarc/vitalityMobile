@@ -10,7 +10,13 @@ import Dashboard3 from "../pages/Dashboard3";
 import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
 import Homework from "../pages/Homework";
+
 import Exercises from "../pages/Exercises";
+import WalkScreen from "../pages/Walk";
+
+
+
+
 import RecipesScreen from "../pages/Receits";
 import RecipeDetailScreen from "../pages/Detalhes/RecipeDetail1";
 import ConfiguracaoScreen from '../pages/Configuracao';
@@ -23,6 +29,10 @@ import InviteFriendsScreen from "../pages/InviteFriends";
 import HelpandSupportScrean from "../pages/HelpandSupport";
 import AppearanceScrean from "../pages/Appearance";
 import { ImportsNotUsedAsValues } from "typescript";
+import Runcreen from "../pages/Run";
+import WeightliftherScreen from "../pages/WeightLifther";
+import Armflexcreen from "../pages/ArmFlex";
+import ArmflexScreen from "../pages/ArmFlex";
 
 
 
@@ -32,7 +42,7 @@ export function AppRoutes() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Appearence" 
+        initialRouteName="Walk" 
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Home" component={Home} />
@@ -42,7 +52,14 @@ export function AppRoutes() {
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Homework" component={Homework} />
+
         <Stack.Screen name="Exercises" component={Exercises} />
+        <Stack.Screen name="WalkScreen" component={WalkScreen} />
+        <Stack.Screen name="Run" component={Runcreen} />
+        <Stack.Screen name="Weighlifther" component={WeightliftherScreen} />
+        <Stack.Screen name="Armflex" component={ArmflexScreen} />
+
+
         <Stack.Screen name="Recipes" component={RecipesScreen} />
         <Stack.Screen name="RecipeDetail" component={RecipeDetailScreen} />
 
